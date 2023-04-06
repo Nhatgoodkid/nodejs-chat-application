@@ -26,16 +26,16 @@ module.exports = (sequelize, DataTypes) => {
             modelName: 'User',
             hooks: {
                 beforeCreate: hashPassword,
-                beforeUpdate: hashPassword
-            }
+                beforeUpdate: hashPassword,
+            },
         },
     );
     return User;
 };
 
 const hashPassword = async (user) => {
-    if (user.changed('password')){ 
-        user.password = await bcrypt.hash(user.password, 10)
+    if (user.changed('password')) {
+        user.password = await bcrypt.hash(user.password, 10);
     }
-    return user
-}
+    return user;
+};

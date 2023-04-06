@@ -2,11 +2,12 @@ const User = require('../models').User;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const config = require('../config/app');
+const { validationResult } = require('express-validator');
 class AuthController {
     async login(req, res) {
         const { email, password } = req.body;
         try {
-            const secret = require('crypto').randomBytes(64).toString('hex');
+            // const secret = require('crypto').randomBytes(64).toString('hex');
 
             //find the user
             const user = await User.findOne({
