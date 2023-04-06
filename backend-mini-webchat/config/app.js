@@ -1,7 +1,7 @@
 require('dotenv').config();
 
-module.exports ={
+module.exports = {
     appKey: process.env.APPKEY,
     appPort: process.env.APP_PORT,
     appUrl: process.env.APP_URL,
-}
+};
