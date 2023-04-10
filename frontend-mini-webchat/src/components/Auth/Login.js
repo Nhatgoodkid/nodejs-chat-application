@@ -3,16 +3,23 @@ import loginImage from '../../assets/images/login.svg';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import AuthService from '../../services/authService';
+import { useDispatch } from 'react-redux';
+import {login} from '../../store/actions/auth'
+
 import './Auth.scss';
 
-const Login = () => {
+const Login = ({history}) => {
+
+    const dispatch = useDispatch()
+
     const [email, setEmail] = useState('nhat@gmail.com');
     const [password, setPassword] = useState('secret');
 
     const submitForm = (e) => {
         e.preventDefault();
+        dispatch(login({email, password}, history))
 
-        AuthService.login({ email, password }).then((res) => console.log(res));
+        // AuthService.login({ email, password }).then((res) => console.log(res));
         // axios.post('http://localhost:3000/auth/login', {email, password})
         //     .then(res =>{
         //         console.log("res", res);
@@ -62,7 +69,7 @@ const Login = () => {
 
                         <p>
                             Don't have an account?
-                            <a href="/auth/register">Register</a>
+                            <Link to="/auth/register">Register</Link>
                         </p>
                     </div>
                 </div>

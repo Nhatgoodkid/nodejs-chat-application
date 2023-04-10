@@ -40,7 +40,7 @@ const Register = () => {
                         </form>
                         <p>
                             Already have an account?
-                            <a href="/auth/login">Login</a>
+                            <Link to="/auth/login">Login</Link>
                         </p>
                     </div>
                 </div>
