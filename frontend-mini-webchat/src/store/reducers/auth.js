@@ -1,27 +1,35 @@
-import { LOGIN } from "../actions/auth";
+import { LOGIN, REGISTER } from '../actions/auth';
 
 const initialState = {
     user: {},
     token: '',
-    isLoggedIn: false
-}
+    isLoggedIn: false,
+};
 
 const authReducer = (state = initialState, action) => {
-    const {type, payload} = action
+    const { type, payload } = action;
 
-    switch (type){
+    switch (type) {
         case LOGIN:
-            return{
+            return {
                 ...state,
                 user: payload,
                 token: payload.token,
-                isLoggedIn: true
-            }
+                isLoggedIn: true,
+            };
+
+        case REGISTER:
+            return {
+                ...state,
+                user: payload,
+                token: payload.token,
+                isLoggedIn: true,
+            };
 
         default: {
-            return state
+            return state;
         }
     }
-}
+};
 
-export default authReducer
+export default authReducer;

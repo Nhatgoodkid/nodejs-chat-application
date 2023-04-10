@@ -4,30 +4,19 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import AuthService from '../../services/authService';
 import { useDispatch } from 'react-redux';
-import {login} from '../../store/actions/auth'
+import { login } from '../../store/actions/auth';
 
 import './Auth.scss';
 
-const Login = ({history}) => {
-
-    const dispatch = useDispatch()
+const Login = ({ history }) => {
+    const dispatch = useDispatch();
 
     const [email, setEmail] = useState('nhat@gmail.com');
     const [password, setPassword] = useState('secret');
 
     const submitForm = (e) => {
         e.preventDefault();
-        dispatch(login({email, password}, history))
-
-        // AuthService.login({ email, password }).then((res) => console.log(res));
-        // axios.post('http://localhost:3000/auth/login', {email, password})
-        //     .then(res =>{
-        //         console.log("res", res);
-        //     })
-        //     .catch(err =>{
-        //         console.log("err", err);
-        //     })
-        // console.log({email, password})
+        dispatch(login({ email, password }, history));
     };
 
     return (
