@@ -1,14 +1,14 @@
 @import '../../assets/scss/variable';
 
-#auth-container{
+#auth-container {
     min-height: 100vh;
     background-color: $bg-main;
 
-    #auth-card{
+    #auth-card {
         display: flex;
         justify-content: center;
 
-        &>div{
+        & > div {
             display: flex;
             flex-direction: row;
             min-width: 500px;
@@ -16,35 +16,36 @@
             background-color: white;
             border-radius: 20px;
 
-            #image-section{
+            #image-section {
                 background-color: $bg-light;
                 border-radius: 20px;
 
-                img{
+                img {
                     max-height: 300px;
                     min-width: 100%;
                 }
             }
 
-            #form-section{
+            #form-section {
                 min-width: 300px;
 
-                h2{
+                h2 {
                     text-align: center;
                 }
 
-                form{
+                form {
                     padding: 20px;
 
-                    .input-field{
-                        input{
+                    .input-field {
+                        input,
+                        select {
                             height: 40px;
                             width: 100%;
                             box-sizing: border-box;
                         }
                     }
 
-                    button{
+                    button {
                         width: 100%;
                         height: 30px;
                         background-color: $bg-main;
