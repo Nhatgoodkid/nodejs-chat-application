@@ -22,7 +22,7 @@ export const register = (params, history) => (dispatch) => {
         .catch((err) => {});
 };
 
-export const logout = () => dispatch => {
-    AuthService.logout()
-    dispatch({type: LOGOUT})
-}
+export const logout = () => (dispatch) => {
+    AuthService.logout();
+    dispatch({ type: LOGOUT });
+};
