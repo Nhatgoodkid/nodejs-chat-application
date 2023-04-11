@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { logout } from '../../../../store/actions/auth';
+import Modal from '../../../Modal/Modal';
 import './Navbar.scss';
 
 const Navbar = () => {
@@ -22,12 +23,23 @@ const Navbar = () => {
                     {user.lastName} {user.firstName}
                 </p>
                 <FontAwesomeIcon icon="caret-down" className="fa-icon" />
+
                 {showProfileOtions && (
                     <div id="profile-options">
                         <p>Update profile</p>
                         <p onClick={() => dispatch(logout())}>Logout</p>
                     </div>
                 )}
+
+                {
+                    <Modal>
+                        <Fragment key="header">Modal Header</Fragment>
+
+                        <Fragment key="body">Modal Body</Fragment>
+
+                        <Fragment key="footer">Modal Footer</Fragment>
+                    </Modal>
+                }
             </div>
         </div>
     );
