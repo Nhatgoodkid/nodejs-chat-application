@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { logout } from '../../../../store/actions/auth';
+import { logout, updateProfile } from '../../../../store/actions/auth';
 import Modal from '../../../Modal/Modal';
 import './Navbar.scss';
 
@@ -22,7 +22,9 @@ const Navbar = () => {
     const submitForm = (e) => {
         e.preventDefault();
 
-        const form = { firstName, lastName, email, gender, password, avatar };
+        const form = { firstName, lastName, email, gender, avatar };
+
+        if (password.length > 0) form.password = password;
 
         const formData = new FormData();
 
@@ -30,7 +32,9 @@ const Navbar = () => {
             formData.append(key, form[key]);
         }
 
-        //dispatch
+        dispatch(updateProfile(formData)).then(() =>
+            setShowProfileModal(false),
+        );
     };
     return (
         <div id="navbar" className="card-shadow">
@@ -132,7 +136,12 @@ const Navbar = () => {
                         </Fragment>
 
                         <Fragment key="footer">
-                            <button className="btn-success">UPDATE</button>
+                            <button
+                                className="btn-success"
+                                onClick={submitForm}
+                            >
+                                UPDATE
+                            </button>
                         </Fragment>
                     </Modal>
                 )}
