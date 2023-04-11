@@ -10,6 +10,7 @@ const Navbar = () => {
     const user = useSelector((state) => state.authReducer.user);
 
     const [showProfileOtions, setShowProfileOptions] = useState(false);
+    const [showProfileModal, setShowProfileModal] = useState(true);
 
     return (
         <div id="navbar" className="card-shadow">
@@ -26,20 +27,22 @@ const Navbar = () => {
 
                 {showProfileOtions && (
                     <div id="profile-options">
-                        <p>Update profile</p>
+                        <p onClick={() => setShowProfileModal(true)}>
+                            Update profile
+                        </p>
                         <p onClick={() => dispatch(logout())}>Logout</p>
                     </div>
                 )}
 
-                {
-                    <Modal>
+                {showProfileModal && (
+                    <Modal click={() => setShowProfileModal(false)}>
                         <Fragment key="header">Modal Header</Fragment>
 
                         <Fragment key="body">Modal Body</Fragment>
 
                         <Fragment key="footer">Modal Footer</Fragment>
                     </Modal>
-                }
+                )}
             </div>
         </div>
     );

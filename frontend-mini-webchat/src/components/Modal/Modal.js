@@ -7,6 +7,14 @@ const Modal = (props) => {
             if (child.key === name) return child;
         });
 
+    const closeModal = (e) => {
+        e.stopPropagation();
+
+        if (e.target.classList.contains('modal-close')) {
+            return props.click();
+        }
+    };
+
     return (
         <div className="modal-mask modal-close">
             <div className="modal-wrapper">
@@ -15,7 +23,12 @@ const Modal = (props) => {
 
                     <div className="modal-body">{findByKey('body')}</div>
 
-                    <div className="modal-footer">{findByKey('footer')}</div>
+                    <div className="modal-footer">
+                        <button className="modal-close" onClick={closeModal}>
+                            CLOSE
+                        </button>
+                        {findByKey('footer')}
+                    </div>
                 </div>
             </div>
         </div>
