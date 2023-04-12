@@ -1,4 +1,4 @@
-import { FETCH_CHATS } from '../actions/chat';
+import { FETCH_CHATS, SET_CURRENT_CHAT } from '../actions/chat';
 
 const initialState = {
     chats: [],
@@ -15,10 +15,13 @@ const chatReducer = (state = initialState, action) => {
                 chats: payload,
             };
 
-        default:
+        case SET_CURRENT_CHAT:
             return {
-                state,
+                ...state,
+                currentChat: payload,
             };
+        default:
+            return state;
     }
 };
 
