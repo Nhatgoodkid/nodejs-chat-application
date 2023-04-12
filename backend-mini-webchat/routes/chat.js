@@ -4,6 +4,7 @@ const router = express.Router();
 const { validate } = require('../validators');
 const { auth } = require('../middleware/auth');
 
+router.get('/messages', [auth], ChatController.messages);
 router.post('/create', [auth], ChatController.create);
 router.get('/', [auth], ChatController.index);
 
