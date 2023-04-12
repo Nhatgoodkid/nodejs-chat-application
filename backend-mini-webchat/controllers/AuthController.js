@@ -47,7 +47,7 @@ class AuthController {
 const generateToken = (user) => {
     delete user.password;
 
-    const token = jwt.sign(user, config.appKey, { expiresIn: 5 });
+    const token = jwt.sign(user, config.appKey, { expiresIn: 10000 });
 
     return { ...{ user }, ...{ token } };
 };
