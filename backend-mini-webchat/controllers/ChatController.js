@@ -34,6 +34,90 @@ class ChatController {
 
         return res.send(user.Chats);
     }
+
+    async create(req, res) {
+        const { partnerId } = req.body;
+
+        const t = await models.sequelize.transaction();
+
+        try {
+            const user = await User.findOne({
+                where: {
+                    id: req.user.id,
+                },
+                include: [
+                    {
+                        model: Chat,
+                        where: {
+                            type: 'dual',
+                        },
+                        include: [
+                            {
+                                model: ChatUser,
+                                where: {
+                                    userId: partnerId,
+                                },
+                            },
+                        ],
+                    },
+                ],
+            });
+
+            if (user && user.Chats.length > 0) {
+                return res.status(403).json({
+                    status: 'Error',
+                    message: 'Chat with this user already exist!',
+                });
+            }
+
+            const chat = await Chat.create(
+                { type: 'dual' },
+                { transaction: t },
+            );
+
+            await ChatUser.bulkCreate(
+                [
+                    {
+                        chatId: chat.id,
+                        userId: req.user.id,
+                    },
+                    {
+                        chatId: chat.id,
+                        userId: partnerId,
+                    },
+                ],
+                { transaction: t },
+            );
+
+            await t.commit();
+
+            const chatNew = await Chat.findOne({
+                where: {
+                    id: chat.id,
+                },
+                include: [
+                    {
+                        model: User,
+                        where: {
+                            [Op.not]: {
+                                id: req.user.id,
+                            },
+                        },
+                    },
+                    {
+                        model: Message,
+                    },
+                ],
+            });
+
+            return res.send(chatNew);
+        } catch (e) {
+            await t.rollback();
+            return res
+                .status(500)
+                .json({ status: 'Error', message: e.message });
+        }
+    }
 }
 
 module.exports = new ChatController();
