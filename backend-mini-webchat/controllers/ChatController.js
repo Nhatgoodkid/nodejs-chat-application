@@ -146,6 +146,25 @@ class ChatController {
 
         return res.json(result);
     }
+
+    async deleteChat(req, res) {
+        try {
+            await Chat.destroy({
+                where: {
+                    id: req.params.id,
+                },
+            });
+
+            return res.json({
+                status: 'Success',
+                message: 'Chat deleted successfull',
+            });
+        } catch (e) {
+            return res
+                .status(500)
+                .json({ status: 'Error', message: e.message });
+        }
+    }
 }
 
 module.exports = new ChatController();
