@@ -10,7 +10,7 @@ const Navbar = () => {
     const user = useSelector((state) => state.authReducer.user);
 
     const [showProfileOtions, setShowProfileOptions] = useState(false);
-    const [showProfileModal, setShowProfileModal] = useState(true);
+    const [showProfileModal, setShowProfileModal] = useState(false);
 
     const [firstName, setFirstName] = useState(user.firstName);
     const [lastName, setLastName] = useState(user.lastName);
