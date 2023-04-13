@@ -24,6 +24,11 @@ class ChatController {
                         },
                         {
                             model: Message,
+                            include: [
+                                {
+                                    model: User,
+                                },
+                            ],
                             limit: 20,
                             order: [['id', 'DESC']],
                         },
@@ -128,6 +133,11 @@ class ChatController {
             where: {
                 chatId: req.query.id,
             },
+            include: [
+                {
+                    model: User,
+                },
+            ],
             limit,
             offset,
         });

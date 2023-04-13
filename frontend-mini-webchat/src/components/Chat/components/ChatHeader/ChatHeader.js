@@ -32,6 +32,7 @@ const ChatHeader = ({ chat }) => {
                 icon={['fas', 'ellipsis-v']}
                 className="fa-icon"
             />
+
             {showChatOptions ? (
                 <div id="settings">
                     <div>
