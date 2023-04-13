@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { userStatus } from '../../../../utils/helpers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './ChatHeader.scss';
 const ChatHeader = ({ chat }) => {
     const [showChatOptions, setShowChatOptions] = useState(false);
     const [showAddFriendModal, setShowAddFriendModal] = useState(false);
