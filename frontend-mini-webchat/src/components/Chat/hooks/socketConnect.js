@@ -5,6 +5,7 @@ import {
     onlineFriends,
     onlineFriend,
     offlineFriend,
+    setSocket,
 } from '../../../store/actions/chat';
 
 function useSocket(user, dispatch) {
@@ -12,6 +13,8 @@ function useSocket(user, dispatch) {
         dispatch(fetchChats())
             .then((res) => {
                 const socket = socketIOClient.connect('http://127.0.0.1:3000');
+
+                dispatch(setSocket(socket));
 
                 socket.emit('join', user);
 
