@@ -38,7 +38,7 @@ const Navbar = () => {
     };
     return (
         <div id="navbar" className="card-shadow">
-            <h2>Chat.io</h2>
+            <h2>Harvard Tan Phong </h2>
             <div
                 onClick={() => setShowProfileOptions(!showProfileOtions)}
                 id="profile-menu"

@@ -40,39 +40,26 @@
     }
 
     #friends-box {
-        .friend-list {
-            display: flex;
-            justify-content: space-between;
-            padding: 15px;
-            cursor: pointer;
+        overflow-y: auto;
+        display: flex;
+        text-align: left;
+
+        @media (min-width: 800px) {
             flex-direction: column;
-            min-width: fit-content;
+        }
 
-            @media (min-width: 800px) {
-                flex-direction: row;
-            }
+        #no-chat {
+            padding: 10px;
+        }
 
-            & > div {
-                display: flex;
+        .opened {
+            background-color: #ececec;
+        }
 
-                img {
-                    display: flex;
-                    align-self: center;
-                    margin-right: 5px;
-                }
-
-                .friend-info {
-                    display: flex;
-                    align-self: center;
-                    flex-direction: column;
-                }
-            }
-
-            .friend-status {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
+        #suggestions {
+            margin-top: 10px;
+            overflow-y: auto;
+            max-height: 300px;
         }
     }
 }

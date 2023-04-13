@@ -13,8 +13,8 @@ const Friend = ({ chat, click }) => {
     const lastMessage = () => {
         if (chat.Messages.length === 0) return '';
 
-        const messgage = chat.Messages[chat.Messages.length - 1];
-        return messgage.type === 'image' ? 'image uploaded' : messgage.messgage;
+        const message = chat.Messages[chat.Messages.length - 1];
+        return message.type === 'image' ? 'image uploaded' : message.message;
     };
 
     return (
