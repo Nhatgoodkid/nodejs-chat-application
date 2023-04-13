@@ -1,7 +1,7 @@
 const socketIo = require('socket.io');
 const { sequelize } = require('../models');
 const users = new Map();
-
+const userSockets = new Map();
 const SocketServer = (server) => {
     const io = socketIo(server);
 
@@ -17,9 +17,11 @@ const SocketServer = (server) => {
                 ];
                 users.set(user.id, existingUser);
                 sockets = [...existingUser.sockets, ...[socket.id]];
+                userSockets.set(socket.id, user.id);
             } else {
                 users.set(user.id, { id: user.id, sockets: [socket.id] });
                 sockets.push(socket.id);
+                userSockets.set(socket.id, user.id);
             }
 
             const onlineFriends = []; //ids
@@ -32,7 +34,7 @@ const SocketServer = (server) => {
             for (let i = 0; i < chatters.length; i++) {
                 if (users.has(chatters[i])) {
                     const chatter = users.get(chatters[i]);
-                    chatters.sockets.forEach((socket) => {
+                    chatter.sockets.forEach((socket) => {
                         try {
                             io.to(socket).emit('online', user);
                         } catch (e) {}
@@ -47,6 +49,39 @@ const SocketServer = (server) => {
                     io.to(socket).emit('friends', onlineFriends);
                 } catch (e) {}
             });
+        });
+
+        socket.on('disconnect', async () => {
+            if (userSockets.has(socket.id)) {
+                // Nếu người dùng vẫn còn các kết nối khác, loại bỏ kết nối hiện tại.
+                const user = users.get(userSockets.get(socket.id));
+
+                if (user.sockets.length > 1) {
+                    user.sockets = user.sockets.filter((sock) => {
+                        if (sock !== socket.id) return true;
+
+                        userSockets.delete(sock);
+                        return false;
+                    });
+
+                    users.set(user.id, user);
+                } else {
+                    const chatters = await getChatters(user.id);
+                    // Ngược lại, gửi sự kiện 'offline' cho tất cả bạn bè của người dùng và loại bỏ người dùng khỏi danh sách người dùng.
+                    for (let i = 0; i < chatters.length; i++) {
+                        if (users.has(chatters[i])) {
+                            users.get(chatters[i]).sockets.forEach((socket) => {
+                                try {
+                                    io.to(socket).emit('offline', user);
+                                } catch (e) {}
+                            });
+                        }
+                    }
+
+                    userSockets.delete(socket.id);
+                    users.delete(user.id);
+                }
+            }
         });
     });
 };
