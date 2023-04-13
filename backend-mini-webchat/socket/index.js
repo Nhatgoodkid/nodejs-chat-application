@@ -1,5 +1,5 @@
 const socketIo = require('socket.io');
-
+const { sequelize } = require('../models');
 const users = new Map();
 
 const SocketServer = (server) => {
@@ -24,11 +24,13 @@ const SocketServer = (server) => {
 
             const onlineFriends = []; //ids
 
-            const chatters = []; //query
+            const chatters = await getChatters(user.id); //query
+
+            console.log(chatters);
 
             // notify his friends that user is now online
             for (let i = 0; i < chatters.length; i++) {
-                if (users.has(chatters[i].id)) {
+                if (users.has(chatters[i])) {
                     const chatter = users.get(chatters[i]);
                     chatters.sockets.forEach((socket) => {
                         try {
@@ -40,15 +42,37 @@ const SocketServer = (server) => {
             }
 
             //send to user sockets which of this friends are online
-            socket.forEach((socket) => {
+            sockets.forEach((socket) => {
                 try {
                     io.to(socket).emit('friends', onlineFriends);
                 } catch (e) {}
             });
-
-            io.to(socket.id).emit('typing', 'User typing ...');
         });
     });
+};
+
+const getChatters = async (userId) => {
+    try {
+        const [results, metadata] = await sequelize.query(`
+            select "cu"."userId" from "ChatUsers" as cu
+            inner join(
+                select "c"."id" from "Chats" as c
+                where exists (
+                    select "u"."id" from "Users" as u
+                    inner join "ChatUsers" on u.id = "ChatUsers"."userId"
+                    where u.id = ${parseInt(
+                        userId,
+                    )} and c.id = "ChatUsers"."chatId"
+                )
+            ) as cjoin on cjoin.id = "cu"."chatId"
+            where "cu"."userId" != ${parseInt(userId)}
+         `);
+
+        return results.length > 0 ? results.map((el) => el.userId) : [];
+    } catch (e) {
+        console.log(e);
+        return [];
+    }
 };
 
 module.exports = SocketServer;
