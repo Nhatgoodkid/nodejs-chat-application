@@ -48,17 +48,75 @@ const chatReducer = (state = initialState, action) => {
                 chats: chatsCopy,
             };
         }
-        case FRIEND_ONLINE:
-            return {
-                ...state,
-                currentChat: payload,
-            };
 
-        case FRIEND_OFFLINE:
+        case FRIEND_ONLINE: {
+            let currentChatCopy = { ...state.currentChat };
+
+            const chatsCopy = state.chats.map((chat) => {
+                const Users = chat.Users.map((user) => {
+                    if (user.id === parseInt(payload.id)) {
+                        return {
+                            ...user,
+                            status: 'online',
+                        };
+                    }
+                    return user;
+                });
+
+                if (chat.id === currentChatCopy.id) {
+                    currentChatCopy = {
+                        ...currentChatCopy,
+                        Users,
+                    };
+                }
+
+                return {
+                    ...chat,
+                    Users,
+                };
+            });
+
             return {
                 ...state,
-                currentChat: payload,
+                chats: chatsCopy,
+                currentChat: currentChatCopy,
             };
+        }
+
+        case FRIEND_OFFLINE: {
+            let currentChatCopy = { ...state.currentChat };
+
+            const chatsCopy = state.chats.map((chat) => {
+                const Users = chat.Users.map((user) => {
+                    if (user.id === parseInt(payload.id)) {
+                        return {
+                            ...user,
+                            status: 'offline',
+                        };
+                    }
+                    return user;
+                });
+
+                if (chat.id === currentChatCopy.id) {
+                    currentChatCopy = {
+                        ...currentChatCopy,
+                        Users,
+                    };
+                }
+
+                return {
+                    ...chat,
+                    Users,
+                };
+            });
+
+            return {
+                ...state,
+                chats: chatsCopy,
+                currentChat: currentChatCopy,
+            };
+        }
+
         default:
             return state;
     }
