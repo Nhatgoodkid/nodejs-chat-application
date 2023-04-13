@@ -6,6 +6,7 @@ import {
     onlineFriend,
     offlineFriend,
     setSocket,
+    receivedMessage,
 } from '../../../store/actions/chat';
 
 function useSocket(user, dispatch) {
@@ -35,6 +36,10 @@ function useSocket(user, dispatch) {
                 socket.on('offline', (user) => {
                     dispatch(offlineFriend(user));
                     console.log('Offline', user);
+                });
+
+                socket.on('received', (message) => {
+                    dispatch(receivedMessage(message, user.id));
                 });
 
                 console.log(res);
