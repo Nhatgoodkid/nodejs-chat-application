@@ -7,7 +7,7 @@ const MessageBox = ({ chat }) => {
     const user = useSelector((state) => state.authReducer.user);
 
     return (
-        <div>
+        <div id="msg-box">
             {chat.Messages.map((message, index) => {
                 return (
                     <Message

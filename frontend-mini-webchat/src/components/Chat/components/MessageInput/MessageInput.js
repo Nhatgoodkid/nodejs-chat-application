@@ -38,8 +38,8 @@ const MessageInput = ({ chat }) => {
     };
 
     return (
-        <div>
-            <div>
+        <div id="input-container">
+            <div id="message-input">
                 <input
                     type="text"
                     placeholder="Message..."
