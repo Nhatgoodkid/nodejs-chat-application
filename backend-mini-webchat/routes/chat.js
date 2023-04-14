@@ -3,10 +3,11 @@ const ChatController = require('../controllers/ChatController');
 const router = express.Router();
 const { validate } = require('../validators');
 const { auth } = require('../middleware/auth');
-
+const { chatFile } = require('../middleware/fileUpload');
 router.delete('/:id', [auth], ChatController.deleteChat);
 router.get('/messages', [auth], ChatController.messages);
 router.post('/create', [auth], ChatController.create);
+router.post('/upload-image', [auth, chatFile], ChatController.imageUpload);
 router.get('/', [auth], ChatController.index);
 
 module.exports = router;

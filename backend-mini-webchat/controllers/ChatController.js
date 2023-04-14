@@ -157,6 +157,14 @@ class ChatController {
         return res.json(result);
     }
 
+    imageUpload(req, res) {
+        if (req.file) {
+            return res.json({ url: req.file.filename });
+        }
+
+        return res.status(500).json('No Image Upload');
+    }
+
     async deleteChat(req, res) {
         try {
             await Chat.destroy({
