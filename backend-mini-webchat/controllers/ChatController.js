@@ -140,6 +140,7 @@ class ChatController {
             ],
             limit,
             offset,
+            order: [['id', 'DESC']],
         });
 
         const totalPages = Math.ceil(messages.count / limit);

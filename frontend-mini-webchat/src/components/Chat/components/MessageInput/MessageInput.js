@@ -143,7 +143,7 @@ const MessageInput = ({ chat }) => {
                 <Picker
                     title="Pick your emoji..."
                     emoji="point_up"
-                    style={{ top: '50px', right: '20px' }}
+                    style={{ postion: 'absolute', top: '50px', right: '20px' }}
                     data={data}
                     onEmojiSelect={selectEmoji}
                 />
