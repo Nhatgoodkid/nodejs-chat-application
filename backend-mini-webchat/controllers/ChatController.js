@@ -285,17 +285,25 @@ class ChatController {
     }
 
     async deleteChat(req, res) {
+        const { id } = req.params;
+
         try {
-            await Chat.destroy({
+            const chat = await Chat.findOne({
                 where: {
-                    id: req.params.id,
+                    id,
                 },
+                include: [
+                    {
+                        model: User,
+                    },
+                ],
             });
 
-            return res.json({
-                status: 'Success',
-                message: 'Chat deleted successfull',
-            });
+            const notifyUsers = chat.Users.map((user) => user.id);
+
+            await chat.destroy();
+
+            return res.json({ chatId: id, notifyUsers });
         } catch (e) {
             return res
                 .status(500)
