@@ -10,6 +10,7 @@ import {
     PAGINATE_MESSAGES,
     INCREMENT_SCROLL,
     CREATE_CHAT,
+    ADD_USER_TO_GROUP,
 } from '../actions/chat';
 
 const initialState = {
@@ -250,6 +251,45 @@ const chatReducer = (state = initialState, action) => {
                 ...state,
                 chats: [...state.chats, ...[payload]],
             };
+
+        case ADD_USER_TO_GROUP: {
+            const { chat, chatters } = payload;
+
+            let exists = false;
+
+            const chatsCopy = state.chats.map((chatState) => {
+                if (chat.id === chatState.id) {
+                    exists = true;
+
+                    return {
+                        ...chatState,
+                        Users: [...chatState.Users, ...chatters],
+                    };
+                }
+
+                return chatState;
+            });
+
+            if (!exists) {
+                chatsCopy.push(chat);
+            }
+            let currentChatCopy = { ...state.currentChat };
+
+            if (Object.keys(currentChatCopy).length > 0) {
+                if (chat.id === currentChatCopy.id) {
+                    currentChatCopy = {
+                        ...state.currentChat,
+                        Users: [...state.currentChat.Users, ...chatters],
+                    };
+                }
+            }
+
+            return {
+                ...state,
+                chats: chatsCopy,
+                currentChat: currentChatCopy,
+            };
+        }
 
         default:
             return state;

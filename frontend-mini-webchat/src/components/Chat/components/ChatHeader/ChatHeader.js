@@ -56,7 +56,7 @@ const ChatHeader = ({ chat }) => {
             </div>
             {showChatOptions ? (
                 <div id="settings">
-                    <div>
+                    <div onClick={() => setShowAddFriendModal(true)}>
                         <FontAwesomeIcon
                             icon={('fas', 'user-plus')}
                             className="fa-icon"
@@ -84,7 +84,7 @@ const ChatHeader = ({ chat }) => {
                 </div>
             ) : null}
 
-            {setShowAddFriendModal && (
+            {showAddFriendModal && (
                 <Modal click={() => setShowAddFriendModal(false)}>
                     <Fragment key="header">
                         <h3 className="m-0">Add friend to group chat</h3>

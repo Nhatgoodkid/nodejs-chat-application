@@ -132,7 +132,7 @@ const SocketServer = (server) => {
                     chat.Users[index].status = 'online';
                     users.get(user.id).sockets.forEach((socket) => {
                         try {
-                            io.to(socket).emit('add-user-to-group', {
+                            io.to(socket).emit('added-user-to-group', {
                                 chat,
                                 chatters: [newChatter],
                             });
@@ -145,7 +145,7 @@ const SocketServer = (server) => {
             if (users.has(newChatter.id)) {
                 users.get(newChatter.id).sockets.forEach((socket) => {
                     try {
-                        io.to(socket).emit('add-user-to-group', {
+                        io.to(socket).emit('added-user-to-group', {
                             chat,
                             chatters: chat.Users,
                         });
