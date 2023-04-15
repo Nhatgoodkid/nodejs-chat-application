@@ -1,20 +1,24 @@
-import React, { useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useRef, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ChatService from '../../../../services/chatService';
 import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
+import { incrementScroll } from '../../../../store/actions/chat';
 import './MessageInput.scss';
 const MessageInput = ({ chat }) => {
+    const dispatch = useDispatch();
     const user = useSelector((state) => state.authReducer.user);
     const socket = useSelector((state) => state.chatReducer.socket);
-
+    const newMessage = useSelector((state) => state.chatReducer.newMessage);
     const fileUpload = useRef();
     const msgInput = useRef();
 
     const [message, setMessage] = useState('');
     const [image, setImage] = useState('');
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+    const [showNewMessageNotification, setShowNewMessageNotification] =
+        useState(false);
 
     const handleMessage = (e) => {
         const value = e.target.value;
@@ -87,10 +91,39 @@ const MessageInput = ({ chat }) => {
         msgInput.current.selectionEnd = endPosition + emojiLength;
     };
 
+    useEffect(() => {
+        if (!newMessage.seen && newMessage.chatId === chat.id) {
+            const msgBox = document.getElementById('msg-box');
+            if (msgBox.scrollTop > msgBox.scrollHeight * 0.3) {
+                dispatch(incrementScroll());
+            } else {
+                setShowNewMessageNotification(true);
+            }
+        } else {
+            setShowNewMessageNotification(false);
+        }
+    }, [newMessage, dispatch]);
+
+    const showNewMessasge = () => {
+        dispatch(incrementScroll());
+        setShowNewMessageNotification(false);
+    };
+
     return (
         <div id="input-container">
             <div id="image-upload-container">
-                <div></div>
+                <div>
+                    {showNewMessageNotification ? (
+                        <div id="message-notification">
+                            <FontAwesomeIcon
+                                onClick={showNewMessasge}
+                                icon="bell"
+                                className="fa-icon"
+                            />
+                            <p className="m-0">new message</p>
+                        </div>
+                    ) : null}
+                </div>
 
                 <div id="image-upload">
                     {image.name ? (
@@ -143,7 +176,7 @@ const MessageInput = ({ chat }) => {
                 <Picker
                     title="Pick your emoji..."
                     emoji="point_up"
-                    style={{ postion: 'absolute', top: '50px', right: '20px' }}
+                    style={{ postion: 'absolute', top: '-50px', right: '20px' }}
                     data={data}
                     onEmojiSelect={selectEmoji}
                 />
