@@ -2,6 +2,8 @@ import React, { useState, Fragment } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Friend from '../Friend/Friend';
 import { setCurrentChat } from '../../../../store/actions/chat';
+import Modal from '../../../Modal/Modal';
+import ChatService from '../../../../services/chatService';
 import './FriendList.scss';
 
 const FriendList = () => {
@@ -15,7 +17,11 @@ const FriendList = () => {
         dispatch(setCurrentChat(chat));
     };
 
-    const searchFriends = (e) => {};
+    const searchFriends = (e) => {
+        ChatService.searchUsers(e.target.value).then((res) =>
+            setSuggestions(res),
+        );
+    };
 
     const addNewFriend = (id) => {};
 
@@ -23,7 +29,7 @@ const FriendList = () => {
         <div id="friends" className="shadow-light">
             <div id="title">
                 <h3 className="m-0">Friends</h3>
-                <button>ADD</button>
+                <button onClick={() => setShowFriendsModal(true)}>ADD</button>
             </div>
 
             <hr />
@@ -44,7 +50,7 @@ const FriendList = () => {
                 )}
             </div>
             {showFriendsModal && (
-                <Modal>
+                <Modal click={() => setShowFriendsModal(false)}>
                     <Fragment key="header">
                         <h3 className="m-0">Create new chat</h3>
                     </Fragment>
@@ -59,9 +65,9 @@ const FriendList = () => {
                         <div id="suggestions">
                             {suggestions.map((user) => {
                                 return (
-                                    <div className="suggestion">
+                                    <div key={user.id} className="suggestion">
                                         <p className="m-0">
-                                            {user.fisrtName} {user.lastName}
+                                            {user.firstName} {user.lastName}
                                         </p>
                                         <button
                                             onClick={() =>

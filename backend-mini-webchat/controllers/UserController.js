@@ -46,11 +46,11 @@ class UserController {
                                 sequelize.col('lastName'),
                             ),
                             {
-                                [sequelize.Op.ilike]: `%${req.body.term}%`,
+                                [sequelize.Op.iLike]: `%${req.query.term}%`,
                             },
                         ),
                         email: {
-                            [sequelize.Op.ilike]: `%${req.body.term}%`,
+                            [sequelize.Op.iLike]: `%${req.query.term}%`,
                         },
                     },
                     [sequelize.Op.not]: {
@@ -59,7 +59,6 @@ class UserController {
                 },
                 limit: 10,
             });
-
             return res.json(users);
         } catch (e) {
             return res.status(500).json({ error: e.message });
