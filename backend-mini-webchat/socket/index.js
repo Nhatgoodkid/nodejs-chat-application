@@ -87,6 +87,16 @@ const SocketServer = (server) => {
             } catch (e) {}
         });
 
+        socket.on('typing', (message) => {
+            message.toUserId.forEach((id) => {
+                if (users.has(id)) {
+                    users.get(id).sockets.forEach((socket) => {
+                        io.to(socket).emit('typing', message);
+                    });
+                }
+            });
+        });
+
         socket.on('disconnect', async () => {
             if (userSockets.has(socket.id)) {
                 // Nếu người dùng vẫn còn các kết nối khác, loại bỏ kết nối hiện tại.
