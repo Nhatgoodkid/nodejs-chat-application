@@ -96,26 +96,33 @@ class ChatController {
 
             await t.commit();
 
-            const chatNew = await Chat.findOne({
+            const creator = await User.findOne({
                 where: {
-                    id: chat.id,
+                    id: req.user.id,
                 },
-                include: [
-                    {
-                        model: User,
-                        where: {
-                            [Op.not]: {
-                                id: req.user.id,
-                            },
-                        },
-                    },
-                    {
-                        model: Message,
-                    },
-                ],
             });
 
-            return res.json(chatNew);
+            const partner = await User.findOne({
+                where: {
+                    id: partnerId,
+                },
+            });
+
+            const forCreator = {
+                id: chat.id,
+                type: 'dual',
+                Users: [partner],
+                Messages: [],
+            };
+
+            const forReceiver = {
+                id: chat.id,
+                type: 'dual',
+                Users: [creator],
+                Messages: [],
+            };
+
+            return res.json([forCreator, forReceiver]);
         } catch (e) {
             await t.rollback();
             return res

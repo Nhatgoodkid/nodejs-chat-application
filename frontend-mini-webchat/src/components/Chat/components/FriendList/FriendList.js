@@ -9,7 +9,7 @@ import './FriendList.scss';
 const FriendList = () => {
     const dispatch = useDispatch();
     const chats = useSelector((state) => state.chatReducer.chats);
-
+    const socket = useSelector((state) => state.chatReducer.socket);
     const [showFriendsModal, setShowFriendsModal] = useState(false);
     const [suggestions, setSuggestions] = useState([]);
 
@@ -23,7 +23,14 @@ const FriendList = () => {
         );
     };
 
-    const addNewFriend = (id) => {};
+    const addNewFriend = (id) => {
+        ChatService.createChat(id)
+            .then((chats) => {
+                socket.emit('add-friend', chats);
+                setShowFriendsModal(false);
+            })
+            .catch((err) => console.log(err));
+    };
 
     return (
         <div id="friends" className="shadow-light">
