@@ -11,4 +11,5 @@ router.post(
     UserController.update,
 );
 
+router.get('/search-users', auth, UserController.search);
 module.exports = router;

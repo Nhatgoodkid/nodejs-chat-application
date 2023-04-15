@@ -32,5 +32,38 @@ class UserController {
             return res.status(500).json({ error: e.message });
         }
     }
+
+    async search(req, res) {
+        try {
+            const users = await User.findAll({
+                where: {
+                    [sequelize.Op.or]: {
+                        namesConcated: sequelize.where(
+                            sequelize.fn(
+                                'concat',
+                                sequelize.col('firstName'),
+                                ' ',
+                                sequelize.col('lastName'),
+                            ),
+                            {
+                                [sequelize.Op.ilike]: `%${req.body.term}%`,
+                            },
+                        ),
+                        email: {
+                            [sequelize.Op.ilike]: `%${req.body.term}%`,
+                        },
+                    },
+                    [sequelize.Op.not]: {
+                        id: req.user.id,
+                    },
+                },
+                limit: 10,
+            });
+
+            return res.json(users);
+        } catch (e) {
+            return res.status(500).json({ error: e.message });
+        }
+    }
 }
 module.exports = new UserController();
