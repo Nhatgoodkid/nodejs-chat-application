@@ -94,7 +94,11 @@ const MessageInput = ({ chat }) => {
     useEffect(() => {
         const msgBox = document.getElementById('msg-box');
 
-        if (!newMessage.seen && newMessage.chatId === chat.id && msgBox.scrollHeight !== msgBox.clientHeight) {
+        if (
+            !newMessage.seen &&
+            newMessage.chatId === chat.id &&
+            msgBox.scrollHeight !== msgBox.clientHeight
+        ) {
             if (msgBox.scrollTop > msgBox.scrollHeight * 0.3) {
                 dispatch(incrementScroll());
             } else {
