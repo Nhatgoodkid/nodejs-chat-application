@@ -244,12 +244,10 @@ class ChatController {
             });
 
             if (chat.Users.length === 2) {
-                return res
-                    .status(403)
-                    .json({
-                        status: 'Error',
-                        message: 'You cannot leave this chat',
-                    });
+                return res.status(403).json({
+                    status: 'Error',
+                    message: 'You cannot leave this chat',
+                });
             }
 
             if (chat.Users.length === 3) {

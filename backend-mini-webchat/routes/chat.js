@@ -5,6 +5,7 @@ const { validate } = require('../validators');
 const { auth } = require('../middleware/auth');
 const { chatFile } = require('../middleware/fileUpload');
 
+router.post('/leave-current-chat', auth, ChatController.leaveCurrentChat);
 router.post('/add-user-to-group', auth, ChatController.addUserToGroup);
 router.delete('/:id', [auth], ChatController.deleteChat);
 router.get('/messages', [auth], ChatController.messages);
