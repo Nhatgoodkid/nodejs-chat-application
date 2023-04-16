@@ -69,6 +69,9 @@ const Register = ({ history }) => {
                                     value={gender}
                                     required="required"
                                 >
+                                    <option value="" selected disabled hidden>
+                                        Choose here
+                                    </option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                 </select>

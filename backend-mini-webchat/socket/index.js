@@ -4,7 +4,11 @@ const Message = require('../models').Message;
 const users = new Map();
 const userSockets = new Map();
 const SocketServer = (server) => {
-    const io = socketIo(server);
+    const io = socketIo(server, {
+        cors: {
+            origin: '*',
+        },
+    });
 
     io.on('connection', (socket) => {
         socket.on('join', async (user) => {
