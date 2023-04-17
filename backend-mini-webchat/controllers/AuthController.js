@@ -30,7 +30,6 @@ class AuthController {
         } catch (e) {
             return res.status(500).json({ message: e.message });
         }
-        return res.send([email, password]);
     }
 
     async register(req, res) {
@@ -44,6 +43,7 @@ class AuthController {
         }
     }
 }
+
 const generateToken = (user) => {
     delete user.password;
 

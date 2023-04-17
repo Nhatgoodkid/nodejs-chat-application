@@ -70,36 +70,37 @@ const ChatHeader = ({ chat }) => {
             </div>
             {showChatOptions ? (
                 <div id="settings">
-                    <div onClick={() => setShowAddFriendModal(true)}>
-                        <FontAwesomeIcon
-                            icon={('fas', 'user-plus')}
-                            className="fa-icon"
-                        />
-                        <p>Add user to chat</p>
+                    <div className="icon-container">
+                        <div onClick={() => setShowAddFriendModal(true)}>
+                            <FontAwesomeIcon
+                                icon={('fas', 'user-plus')}
+                                className="fa-icon"
+                            />
+                            <p>Add user to chat</p>
+                        </div>
+
+                        {chat.type === 'group' ? (
+                            <div onClick={() => leaveChat()}>
+                                <FontAwesomeIcon
+                                    icon={('fas', 'sign-out-alt')}
+                                    className="fa-icon"
+                                />
+                                <p>Leave chat</p>
+                            </div>
+                        ) : null}
+
+                        {chat.type === 'dual' ? (
+                            <div onClick={() => deleteChat()}>
+                                <FontAwesomeIcon
+                                    icon={('fas', 'trash')}
+                                    className="fa-icon"
+                                />
+                                <p>Delete chat</p>
+                            </div>
+                        ) : null}
                     </div>
-
-                    {chat.type === 'group' ? (
-                        <div onClick={() => leaveChat()}>
-                            <FontAwesomeIcon
-                                icon={('fas', 'sign-out-alt')}
-                                className="fa-icon"
-                            />
-                            <p>Leave chat</p>
-                        </div>
-                    ) : null}
-
-                    {chat.type === 'dual' ? (
-                        <div onClick={() => deleteChat()}>
-                            <FontAwesomeIcon
-                                icon={('fas', 'trash')}
-                                className="fa-icon"
-                            />
-                            <p>Delete chat</p>
-                        </div>
-                    ) : null}
                 </div>
             ) : null}
-
             {showAddFriendModal && (
                 <Modal click={() => setShowAddFriendModal(false)}>
                     <Fragment key="header">

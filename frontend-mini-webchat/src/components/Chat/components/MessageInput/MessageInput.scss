@@ -1,3 +1,15 @@
 #chat-image {
     display: none;
 }
+#image-details {
+    align-items: center;
+}
+
+#image-details .fa-icon {
+    font-size: 1.5rem;
+    margin-right: 2rem;
+}
+
+#image-details .fa-icon:last-child {
+    margin-right: 0;
+}

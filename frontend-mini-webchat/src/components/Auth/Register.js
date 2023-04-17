@@ -25,7 +25,7 @@ const Register = ({ history }) => {
             <div id="auth-card">
                 <div className="card-shadow">
                     <div id="image-section">
-                        <img src={registerImage} alt="Login" />
+                        <img src={registerImage} alt="Register" />
                     </div>
 
                     <div id="form-section">

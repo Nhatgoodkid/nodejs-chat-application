@@ -27,6 +27,10 @@
         position: relative;
         cursor: pointer;
 
+        .edit-user {
+            color: rgb(55, 0, 255);
+        }
+
         p {
             display: flex;
             align-self: center;
@@ -58,7 +62,7 @@
         }
 
         form {
-            padding: 20px;
+            padding: 10px;
 
             .input-field {
                 input,

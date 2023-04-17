@@ -77,6 +77,7 @@ const FriendList = () => {
                                             {user.firstName} {user.lastName}
                                         </p>
                                         <button
+                                            className="btn-success"
                                             onClick={() =>
                                                 addNewFriend(user.id)
                                             }

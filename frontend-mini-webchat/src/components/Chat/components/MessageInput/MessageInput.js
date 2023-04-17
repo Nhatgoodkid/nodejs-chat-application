@@ -177,15 +177,16 @@ const MessageInput = ({ chat }) => {
                 onChange={(e) => setImage(e.target.files[0])}
             />
 
-            {showEmojiPicker ? (
-                <Picker
-                    title="Pick your emoji..."
-                    emoji="point_up"
-                    style={{ postion: 'absolute', top: '-50px', right: '20px' }}
-                    data={data}
-                    onEmojiSelect={selectEmoji}
-                />
-            ) : null}
+            <div className="show-emoji">
+                {showEmojiPicker ? (
+                    <Picker
+                        title="Pick your emoji..."
+                        emoji="point_up"
+                        data={data}
+                        onEmojiSelect={selectEmoji}
+                    />
+                ) : null}
+            </div>
         </div>
     );
 };

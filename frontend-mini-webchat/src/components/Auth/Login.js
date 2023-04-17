@@ -13,10 +13,13 @@ const Login = ({ history }) => {
 
     const [email, setEmail] = useState('nhat@gmail.com');
     const [password, setPassword] = useState('secret');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const submitForm = (e) => {
         e.preventDefault();
-        dispatch(login({ email, password }, history));
+        dispatch(login({ email, password }, history)).catch((err) =>
+            setErrorMessage(console.log('Error')),
+        );
     };
 
     return (
@@ -29,6 +32,9 @@ const Login = ({ history }) => {
 
                     <div id="form-section">
                         <h2>Welcome Back</h2>
+                        {errorMessage && (
+                            <div className="error-message">{errorMessage}</div>
+                        )}
 
                         <form onSubmit={submitForm}>
                             <div className="input-field mb-1">

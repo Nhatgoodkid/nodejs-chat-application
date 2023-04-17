@@ -67,6 +67,7 @@ const Navbar = () => {
                         <Fragment key="body">
                             <form>
                                 <div className="input-field mb-1">
+                                    <p className="edit-user">First Name</p>
                                     <input
                                         onChange={(e) =>
                                             setFirstName(e.target.value)
@@ -78,6 +79,7 @@ const Navbar = () => {
                                     />
                                 </div>
                                 <div className="input-field mb-1">
+                                    <p className="edit-user">Last Name</p>
                                     <input
                                         onChange={(e) =>
                                             setLastName(e.target.value)
@@ -89,6 +91,7 @@ const Navbar = () => {
                                     />
                                 </div>
                                 <div className="input-field mb-1">
+                                    <p className="edit-user">Email</p>
                                     <input
                                         onChange={(e) =>
                                             setEmail(e.target.value)
@@ -100,6 +103,7 @@ const Navbar = () => {
                                     />
                                 </div>
                                 <div className="input-field mb-1">
+                                    <p className="edit-user">Gender</p>
                                     <select
                                         onChange={(e) =>
                                             setGender(e.target.value)
@@ -113,6 +117,7 @@ const Navbar = () => {
                                 </div>
 
                                 <div className="input-field mb-2">
+                                    <p className="edit-user">Password</p>
                                     <input
                                         onChange={(e) =>
                                             setPassword(e.target.value)
@@ -123,7 +128,7 @@ const Navbar = () => {
                                         placeholder="Password"
                                     />
                                 </div>
-
+                                <p className="edit-user">Avatar</p>
                                 <div className="input-field mb-2">
                                     <input
                                         onChange={(e) =>
