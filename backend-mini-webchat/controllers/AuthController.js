@@ -37,6 +37,7 @@ class AuthController {
             const user = await User.create(req.body);
 
             const userWithToken = generateToken(user.get({ raw: true }));
+            userWithToken.user.avatar = user.avatar;
             return res.send(userWithToken);
         } catch (e) {
             return res.status(500).json({ message: e.message });
