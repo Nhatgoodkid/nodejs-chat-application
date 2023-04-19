@@ -77,8 +77,7 @@ const MessageBox = ({ chat }) => {
                     <Message
                         user={user}
                         chat={chat}
-                        me
-                        ssage={message}
+                        message={message}
                         index={index}
                         key={message.id}
                     />
